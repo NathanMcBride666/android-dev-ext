@@ -3,7 +3,6 @@
 const vscode = require('vscode');
 const { AndroidContentProvider } = require('./src/contentprovider');
 const { openLogcatWindow } = require('./src/logcat');
-const state = require('./src/state');
 
 function getADBPort() {
     var defaultPort = 5037;
@@ -31,7 +30,7 @@ function activate(context) {
             openLogcatWindow(vscode);
         }),
         // watch for changes in the launch config
-        vscode.workspace.onDidChangeConfiguration(e => {
+        vscode.workspace.onDidChangeConfiguration(() => {
             wsproxyserver.setADBPort(getADBPort());
         })
     ];

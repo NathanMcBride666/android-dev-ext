@@ -825,7 +825,7 @@ class AndroidDebugSession extends DebugSession {
                     x.last_exception.objvar = ex_local;
                     return $.when(x, x.thread.getVariables(x.last_exception.scopeRef));
                 })
-                .then((x, vars) => {
+                .then((x) => {
                     var {response,scopes,last_exception} = x;
                     // put the exception first - otherwise it can get lost if there's a lot of locals
                     scopes.unshift(new Scope("Exception: " + last_exception.objvar.type.typename, last_exception.scopeRef, false));

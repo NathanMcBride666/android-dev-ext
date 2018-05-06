@@ -1,5 +1,5 @@
 const WebSocketServer = require('./minwebsocket').WebSocketServer;
-const { atob, btoa, ab2str, str2u8arr, arrayBufferToString, intFromHex, intToHex, D,E,W, get_file_fd_from_fdn } = require('./util');
+const { atob, btoa, ab2str, str2u8arr, arrayBufferToString, intFromHex, intToHex, D,E, get_file_fd_from_fdn } = require('./util');
 const { connect_forward_listener } = require('./services');
 const { get_socket_fd_from_fdn, socket_loopback_client } = require('./sockets');
 const { readx, writex } = require('./transport');
@@ -288,7 +288,7 @@ var stdoutMonitor = function(fd, si, packets) {
 // dc <fd|all> - disconnect adb sockets
 
 var proxy_command_fns = {
-  cn:function(si, e) {
+  cn:function(si) {
     // create adb socket
     socket_loopback_client(si.wsServer.adbport, function(fd) {
       if (!fd) {

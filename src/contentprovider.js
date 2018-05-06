@@ -31,7 +31,7 @@ class AndroidContentProvider /*extends TextDocumentContentProvider*/ {
      * @param token A cancellation token.
      * @return A string or a thenable that resolves to such.
      */
-    provideTextDocumentContent(uri/*: Uri*/, token/*: CancellationToken*/)/*: string | Thenable<string>;*/ {
+    provideTextDocumentContent(uri/*: Uri, token: CancellationToken*/)/*: string | Thenable<string>;*/ {
         var doc = this._docs[uri];
         if (doc) return this._docs[uri].content;
         switch (uri.authority) {

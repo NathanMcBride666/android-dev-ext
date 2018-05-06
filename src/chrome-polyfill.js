@@ -1,5 +1,4 @@
 const net = require('net');
-const D = require('./util').D;
 
 var sockets_by_id = {};
 var last_socket_id = 0;
@@ -47,7 +46,7 @@ const chrome = {
                 this.s.onerror = null;
                 this.cb.call(null,0);
             }.bind({s:s,cb:cb}));
-            s.onerror = function(e) {
+            s.onerror = function() {
                 this.s.onerror = null;
                 this.cb.call(null,-1);
             }.bind({s:s,cb:cb});
@@ -97,7 +96,7 @@ const chrome = {
                 }
                 this.onerror = this.onclose = null;
             }.bind(s));
-            var on_read_terminated = function(e) {
+            var on_read_terminated = function() {
                 this.readbuffer = Buffer.alloc(0);
                 while(this.read_requests.length) {
                     var readInfo = {
@@ -117,7 +116,7 @@ const chrome = {
             var s = sockets_by_id[socketId];
             if (!(data instanceof Buffer))
                 data = Buffer.from(data);
-            s._raw.write(data, function(e,f,g) {
+            s._raw.write(data, function() {
                 if (this.s.write_cbs.length === 1)
                     this.s.onerror = null;
                 var writeInfo = {
@@ -128,7 +127,7 @@ const chrome = {
             }.bind({s:s,len:data.length,cb:cb}));
             s.write_cbs.push(cb);
             if (!s.onerror) {
-                s.onerror = function(e) {
+                s.onerror = function() {
                     this.s.onerror = null;
                     while (this.s.write_cbs.length) {
                         var writeInfo = {

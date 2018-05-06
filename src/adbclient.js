@@ -4,7 +4,7 @@
 const _JDWP = require('./jdwp')._JDWP;
 const $ = require('./jq-promise');
 const WebSocket = require('./minwebsocket').WebSocketClient;
-const { atob,btoa,D } = require('./util');
+const { atob,btoa } = require('./util');
 
 function ADBClient(deviceid) {
     this.deviceid = deviceid;
@@ -279,7 +279,7 @@ ADBClient.prototype = {
             });
 
         o.cmd.deferred
-            .then(function(decoded,reply,command) {
+            .then(function(decoded/*,reply,command */) {
                 x.deferred.resolveWith(x.o.ths||this, [decoded,x.o.extra]);
             })
             .fail(function(err) {
@@ -596,7 +596,7 @@ ADBClient.prototype = {
         this.proxy_disconnect_with_fail(err);
     },
 
-    proxy_onclose : function(e) {
+    proxy_onclose : function(/* e */) {
         // when disconnecting, reject any pending promises first
         var pending = [];
         for (var cmd in this.activepromise) {
@@ -676,7 +676,7 @@ ADBClient.prototype = {
         return this.activepromise.connected.promise();
     },
 
-    logsend : function(cmd, msg, opts) {
+    logsend : function(cmd, msg) {
         var def = $.Deferred();
         if (this.activepromise[cmd]) {
             if (Array.isArray(this.activepromise[cmd])) {

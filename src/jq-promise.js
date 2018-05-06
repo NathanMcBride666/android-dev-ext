@@ -1,9 +1,9 @@
 // a very stripped down polyfill implementation of jQuery's promise methods
 const util = require('util');   // for util.inspect
-var $ = this;
+const $ = this;
 
 // Deferred wraps a Promise into a jQuery-like object
-var Deferred = exports.Deferred = function(p, parent) {
+this.Deferred = function(p, parent) {
     var o = { 
         _isdeferred:true,
         _original:null,
@@ -107,9 +107,9 @@ var Deferred = exports.Deferred = function(p, parent) {
 
 // $.when() is jQuery's version of Promise.all()
 // - this version just scans the array of arguments waiting on any Deferreds in turn before finally resolving the return Deferred
-var when = exports.when = function() {
+this.when = function() {
     if (arguments.length === 1 && Array.isArray(arguments[0])) {
-        return when.apply(this,...arguments).then(() => [...arguments]);
+        return $.when.apply(this,...arguments).then(() => [...arguments]);
     }
     var x = {
         def: $.Deferred(),

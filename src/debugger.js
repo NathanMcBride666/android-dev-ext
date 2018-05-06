@@ -72,7 +72,7 @@ Debugger.prototype = {
     startDebugSession(build, deviceid, launcherActivity) {
         return this.newSession(build, deviceid)
             .runapp('debug', launcherActivity, this)
-            .then(function (deviceid) {
+            .then(function (/* deviceid */) {
                 return this.getDebuggablePIDs(this.session.deviceid, this);
             })
             .then(function (pids, dbgr) {
@@ -124,6 +124,7 @@ Debugger.prototype = {
                     }, 1000, x);
                 })
                 .fail(function (err) {
+                    err;
                 });
         }
         return x.deferred;
@@ -266,7 +267,7 @@ Debugger.prototype = {
                     onreply: this._onjdwpmessage,
                 });
             })
-            .then(function (info) {
+            .then(function () {
                 // handshake has completed
                 this.connection.connected = true;
                 // call suspend first - we shouldn't really need to do this (as the debugger
@@ -343,7 +344,7 @@ Debugger.prototype = {
         return "connecting";
     },
 
-    forcestop: function (extra) {
+    forcestop: function () {
         return this.ensureconnected()
             .then(function () {
                 return new ADBClient(this.session.deviceid).shell_cmd({
